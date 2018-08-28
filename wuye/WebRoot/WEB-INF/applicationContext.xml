@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	<!-- 配置数据库 -->
+	<!-- DBCP是一个开源的数据库连接池，往BasicDataSource类中的driverClassName,url,username,password分别注入值：... -->
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/db_wuye?useUnicode=true&amp;characterEncoding=utf-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="root"></property>
+	</bean>
+	
+	<!-- 往LocalSessionFactoryBean类中的dataSource成员注入值：dataSource，
+		  hibernateProperties成员（该成员的类型是Properties(java.util)）注入值：
+		  hibernateProperties配置文件有两个成员：hibernate.dialect, hibernate.show_sql
+		    分别注入值：org.hibernate.dialect.SQLServerDialect和true,
+		  mappingResources（数组）注入值：...
+		  ref bean的值与上面bean id的值对应 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+			<!-- 配置数据库方言，让hibernate识别不同数据库（这里是mysql）里特有的关键字 -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+			<!-- 输出底层的SQL语句-->
+				<prop key="hibernate.show_sql">false</prop>
+			<!-- 格式化输出SQL语句 
+				<prop key="hibernate.format_sql">true</prop> -->
+			</props>
+		</property>
+		<!-- 放入所有的hibernate映射配置文件 -->
+		<property name="mappingResources">
+			<list>
+				<value>com/model/TAdmin.hbm.xml</value>
+				<value>com/model/TTousu.hbm.xml</value>
+				<value>com/model/TZhuhu.hbm.xml</value>
+				<value>com/model/TFangwu.hbm.xml</value>
+				<value>com/model/TBaoxiu.hbm.xml</value>
+				<value>com/model/TShoufei.hbm.xml</value>
+				<value>com/model/TTingchechang.hbm.xml</value>
+				</list>
+		</property>
+	</bean>
+	
+<!-- 以上两个bean本是hibernate.cfg.xml配置文件中内容，现全部整合到spring中，就不写hibernate.cfg.xml文件了 -->	
+	
+	
+	<!-- 后台的登录 -->
+	<!-- 往loginService类中的adminDAO成员注入值：TAdminDAO，zhuhuDAO成员注入之：TZhuhuDAO,ref bean的值与上面bean id的值对应-->
+	<bean id="loginService" class="com.service.loginService">
+		<property name="adminDAO">
+			<ref bean="TAdminDAO" />
+		</property>
+		<property name="zhuhuDAO">
+			<ref bean="TZhuhuDAO" />
+		</property>
+		<property name="fangwuDAO">
+			<ref bean="TFangwuDAO" />
+		</property>
+	</bean>
+	
+	
+	<!-- 使用HibernateDaoSupport类时，HibernateDaoSupport类中的setSessionFactory方法需要注入一个sessionFactory，
+	          然后才能通过getHibernateTemplate获得HibernateTemplate模板，使用HibernateTemplate中的方法 -->
+	
+	
+	<bean id="TAdminDAO" class="com.dao.TAdminDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- 往adminAction类中的adminDAO成员注入值：TAdminDAO，ref bean的值与上面bean id的值对应-->
+	<!-- prototype（多例，类对象可以创建多次） -->
+	<bean id="adminAction" class="com.action.adminAction" scope="prototype">
+		<property name="adminDAO">
+			<ref bean="TAdminDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	<bean id="TTousuDAO" class="com.dao.TTousuDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!-- name的值是对应action类中属性的名称 -->
+	<!-- 往tousuActIon类中的zhuhuDAO成员注入值：TZhuhuDAO，tousuDAO成员注入值：TTousuDAO，ref bean的值与上面bean id的值对应 -->
+	<bean id="tousuAction" class="com.action.tousuActon" scope="prototype">
+		<property name="zhuhuDAO">
+			<ref bean="TZhuhuDAO" />
+		</property>
+		<property name="tousuDAO">
+			<ref bean="TTousuDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	
+	
+	<bean id="TZhuhuDAO" class="com.dao.TZhuhuDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="TTingchechangDAO" class="com.dao.TTingchechangDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="TFangwuDAO" class="com.dao.TFangwuDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!-- name的值是对应action类中属性的名称 -->
+	<!-- 往zhuhuAction类中的zhuhuDAO成员注入值：TZhuhuDAO，ref bean的值与上面bean id的值对应 -->
+	<bean id="zhuhuAction" class="com.action.zhuhuAction" scope="prototype">
+		<property name="zhuhuDAO">
+			<ref bean="TZhuhuDAO" />
+		</property>
+	</bean>
+	
+	<!-- name的值是对应action类中属性的名称 -->
+	<!-- 往tingchechangAction类中的tingchechangDAO成员注入值：TTingchechangDAO，ref bean的值与上面bean id的值对应 -->
+	<bean id="tingchechangAction" class="com.action.tingchechangAction" scope="prototype">
+		<property name="tingchechangDAO">
+			<ref bean="TTingchechangDAO" />
+		</property>
+	</bean>
+	
+	<!-- name的值是对应action类中属性的名称 -->
+	<!-- 往fangwuAction类中的fangwuDAO成员注入值：TFangwuDAO，ref bean的值与上面bean id的值对应 -->
+	<bean id="fangwuAction" class="com.action.fangwuAction" scope="prototype">
+		<property name="fangwuDAO">
+			<ref bean="TFangwuDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	
+	<bean id="TBaoxiuDAO" class="com.dao.TBaoxiuDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- name的值是对应action类中属性的名称 -->
+	<!-- 往baoxiuActon类中的zhuhuDAO成员注入值：TzhuhuDAO,baoxiuDAO成员注入之：TBaoxiuDao，ref bean的值与上面bean id的值对应-->
+	<bean id="baoxiuActon" class="com.action.baoxiuActon" scope="prototype">
+		<property name="zhuhuDAO">
+			<ref bean="TZhuhuDAO" />
+		</property>
+		<property name="baoxiuDAO">
+			<ref bean="TBaoxiuDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	
+	<bean id="TShoufeiDAO" class="com.dao.TShoufeiDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!-- name的值是对应action类中属性的名称 -->
+	<!-- 往shoufeiActon类中的zhuhuDAO成员注入值：TZhuhuDAO，shoufeiDAO成员注入值：TShoufeiDAO，ref bean的值与上面bean id的值对应 -->
+	<bean id="shoufeiActon" class="com.action.shoufeiActon" scope="prototype">
+		<property name="zhuhuDAO">
+			<ref bean="TZhuhuDAO" />
+		</property>
+		<property name="shoufeiDAO">
+			<ref bean="TShoufeiDAO" />
+		</property>
+	</bean>
+	
+	</beans>

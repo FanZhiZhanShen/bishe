@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.model.TShoufei" table="t_shoufei">
+        <id name="shoufeiId" type="java.lang.Integer">
+            <column name="shoufei_id" />
+            <generator class="increment" />
+        </id>
+        <property name="shoufeiShijian" type="java.lang.String">
+            <column name="shoufei_shijian" length="50" />
+        </property>
+        <property name="shoufeiXiangmu" type="java.lang.String">
+            <column name="shoufei_xiangmu" length="50" />
+        </property>
+        <property name="shoufeiJine" type="java.lang.String">
+            <column name="shoufei_jine" />
+        </property>
+        <property name="yijiaojine" type="java.lang.String">
+            <column name="yijiaojine" />
+        </property>
+        <property name="zhuhuId" type="java.lang.Integer">
+            <column name="zhuhu_id" />
+        </property>
+        <property name="isnotice" type="java.lang.Integer">
+            <column name="isnotice" />
+        </property>
+        <property name="del" type="java.lang.String">
+            <column name="del" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

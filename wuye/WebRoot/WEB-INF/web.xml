@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<!-- 配置首页，这样即使网页不输入wuye/login.jsp，也会直接跳转到这个页面 -->
+	<welcome-file-list>
+		<welcome-file>/login.jsp</welcome-file>
+	</welcome-file-list>
+
+	<!-- 指定Spring配置文件位置 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
+	
+	<!-- 配置监听器，使服务器一启动就加载spring配置文件-->
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+	<!-- 配置struts过滤器 -->
+	<filter>
+		<filter-name>struts</filter-name>
+		<filter-class>
+			org.apache.struts2.dispatcher.FilterDispatcher
+		</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 清除缓存，做文件上传时一般要加上这个过滤器，不然可能发生第一次上传获取不到文件的问题 -->
+	<filter>
+		<filter-name>struts-cleanup</filter-name>
+		<filter-class>
+			org.apache.struts2.dispatcher.ActionContextCleanUp
+		</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts-cleanup</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- 配置dwr框架的相关信息，从其他项目中引入 -->
+	<servlet>
+    <servlet-name>dwr-invoker</servlet-name>
+    <servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
+    <init-param>
+      <param-name>debug</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>activeReverseAjaxEnabled</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>initApplicationScopeCreatorsAtStartup</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>  
+    <param-name>crossDomainSessionSecurity</param-name>  
+    <param-value>false</param-value>  
+</init-param>
+    <init-param>
+      <param-name>maxWaitAfterWrite</param-name>
+      <param-value>500</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>dwr-invoker</servlet-name>
+    <url-pattern>/dwr/*</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 配置验证码的Servlet映射信息 -->
+  <servlet>    
+   <description>用于生成验证码</description>    
+   <display-name>生成验证码</display-name>    
+   <servlet-name>GetCaptcha</servlet-name>    
+   <servlet-class>com.servlet.GetCaptcha</servlet-class>    
+	</servlet>    
+  
+	<servlet-mapping>    
+	  <servlet-name>GetCaptcha</servlet-name>    
+	  <url-pattern>/getcaptcha.sl</url-pattern>    
+	</servlet-mapping>  
+</web-app>

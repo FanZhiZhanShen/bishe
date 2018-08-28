@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.model.TBaoxiu" table="t_baoxiu">
+        <id name="baoxiuId" type="java.lang.Integer">
+            <column name="baoxiu_id" />
+            <generator class="increment" />
+        </id>
+        <property name="baoxiuShijian" type="java.lang.String">
+            <column name="baoxiu_shijian" length="50" />
+        </property>
+        <property name="baoxiuBeizhu" type="java.lang.String">
+            <column name="baoxiu_beizhu" length="5000" />
+        </property>
+        <property name="zhuhuId" type="java.lang.Integer">
+            <column name="zhuhu_id" />
+        </property>
+        <property name="del" type="java.lang.String">
+            <column name="del" length="50" />
+        </property>
+        <property name="baoxiuZhuangtai" type="java.lang.String">
+            <column name="baoxiu_zhuangtai" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

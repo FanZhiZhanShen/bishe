@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC   
+     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+     
+     
+<struts>
+	<!-- struts-default.xml文件是struts2框架默认加载的配置文件,在struts核心jar包中 -->
+    <package name="rongcheng" extends="struts-default">
+    <!-- 配置全局result，只要action指定的method方法返回的是下列result name，就跳转到相应页面 -->
+        <global-results>
+            <result name="succeed">/common/succeed.jsp</result>
+        </global-results>
+        <!--这里class里不写类的完成路径是因为applicationContext里配置了bean，写bean的id值就行 所有action类里的基本所有方法，都配置action-->
+    
+        <action name="zhuhuAdd" class="zhuhuAction" method="zhuhuAdd">
+        </action>
+        <action name="zhuhuDel" class="zhuhuAction" method="zhuhuDel">
+        </action>
+        <action name="zhuhuMana" class="zhuhuAction" method="zhuhuMana">
+            <result name="success">/admin/zhuhu/zhuhuMana.jsp</result>
+        </action>
+        <action name="zhuhuInfo" class="zhuhuAction" method="zhuhuInfo">
+            <result name="success">/azhuhu/userinfo/zhuhuInfo.jsp</result>
+        </action>
+        <action name="zhuhuSearch" class="zhuhuAction" method="zhuhuSearch">
+            <result name="success">/admin/zhuhu/zhuhuMana.jsp</result>
+        </action>
+        <action name="zhuhuEditPre" class="zhuhuAction" method="zhuhuEditPre">
+            <result name="success">/admin/zhuhu/zhuhuEditPre.jsp</result>
+        </action>
+        <action name="zhuhuEdit" class="zhuhuAction" method="zhuhuEdit">
+        </action>         
+        
+        
+        <action name="tingchechangAdd" class="tingchechangAction" method="tingchechangAdd">
+        </action>
+        <action name="tingchechangDel" class="tingchechangAction" method="tingchechangDel">
+        </action>
+        <action name="tingchechangMana" class="tingchechangAction" method="tingchechangMana">
+            <result name="success">/admin/tingchechang/tingchechangMana.jsp</result>
+        </action>
+        <action name="tingchechangSearch" class="tingchechangAction" method="tingchechangSearch">
+            <result name="success">/admin/tingchechang/tingchechangMana.jsp</result>
+        </action>
+        <action name="tingchechangEditPre" class="tingchechangAction" method="tingchechangEditPre">
+            <result name="success">/admin/tingchechang/tingchechangEditPre.jsp</result>
+        </action>
+    	<action name="tingchechangEdit" class="tingchechangAction" method="tingchechangEdit">
+        </action>
+        
+        
+        <action name="fangwuAdd" class="fangwuAction" method="fangwuAdd">
+        </action>
+        <action name="fangwuDel" class="fangwuAction" method="fangwuDel">
+        </action>
+        <action name="fangwuQuery" class="fangwuAction" method="fangwuQuery">
+        </action>
+        <action name="fangwuMana" class="fangwuAction" method="fangwuMana">
+            <result name="success">/admin/fangwu/fangwuMana.jsp</result>
+        </action>
+        <action name="fangwuSearch" class="fangwuAction" method="fangwuSearch">
+            <result name="success">/admin/fangwu/fangwuMana.jsp</result>
+        </action>
+        <action name="fangwuEditPre" class="fangwuAction" method="fangwuEditPre">
+            <result name="success">/admin/fangwu/fangwuEditPre.jsp</result>
+        </action>
+        <action name="fangwuEdit" class="fangwuAction" method="fangwuEdit">
+        </action>    
+        
+        
+        <action name="tousuAdd" class="tousuAction" method="tousuAdd">
+        </action>
+        <action name="tousuMy" class="tousuAction" method="tousuMy">
+            <result name="success">/azhuhu/tousu/tousuMy.jsp</result>
+        </action>
+        <action name="tousuDel" class="tousuAction" method="tousuDel">
+        </action>
+        <action name="tousuShouli" class="tousuAction" method="tousuShouli">
+        </action>
+        <action name="tousuWaitDealCount" class="tousuAction" method="tousuWaitDealCount">
+        </action>
+        <action name="tousuMana" class="tousuAction" method="tousuMana">
+            <result name="success">/admin/tousu/tousuMana.jsp</result>
+        </action>
+        
+        
+        <action name="baoxiuAdd" class="baoxiuActon" method="baoxiuAdd">
+        </action>
+        <action name="baoxiuMy" class="baoxiuActon" method="baoxiuMy">
+            <result name="success">/azhuhu/baoxiu/baoxiuMy.jsp</result>
+        </action>
+        <action name="baoxiuDel" class="baoxiuActon" method="baoxiuDel">
+        </action>
+        <action name="baoxiuShouli" class="baoxiuActon" method="baoxiuShouli">
+        </action>
+        <action name="baoxiuWaitDealCount" class="baoxiuActon" method="baoxiuWaitDealCount">
+        </action>
+        <action name="baoxiuMana" class="baoxiuActon" method="baoxiuMana">
+            <result name="success">/admin/baoxiu/baoxiuMana.jsp</result>
+        </action>
+        
+        
+        <action name="shoufeiAdd" class="shoufeiActon" method="shoufeiAdd"></action>
+        <action name="shoufeiEdit" class="shoufeiActon" method="shoufeiEdit">
+        </action>
+        <action name="shoufeiNotice" class="shoufeiActon" method="shoufeiNotice">
+        </action>
+        <action name="shoufeiDel" class="shoufeiActon" method="shoufeiDel">
+        </action>
+        <action name="shoufeiMana" class="shoufeiActon" method="shoufeiMana">
+            <result name="success">/admin/shoufei/shoufeiMana.jsp</result>
+        </action>  
+        <action name="userShoufeiMana" class="shoufeiActon" method="userShoufeiMana">
+            <result name="success">/azhuhu/shoufei/userShoufeiMana.jsp</result>
+        </action>
+        <action name="userShoufeiEditPre" class="shoufeiActon" method="userShoufeiEditPre">
+            <result name="success">/azhuhu/shoufei/userShoufeiEditPre.jsp</result>
+        </action>
+    </package>
+</struts>

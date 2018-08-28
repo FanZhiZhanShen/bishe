@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" "http://getahead.org/dwr/dwr20.dtd">
+<dwr>
+
+	<!-- 配置dwr的作用就是让js可以调用后台的方法 -->
+	<!-- 允许JavaScript从WEB服务器上一个遵循了ajax原则的Servlet中获取数据。另一方面一个
+	JavaScript库可以帮助网站开发人员轻松的利用获取的数据来动态的改变网页的内容 -->
+     <allow>
+     
+   		  <!-- 使用Spring框架来访问Bean，javascript属性值是Spring配置文件里对应的bean的id，用来指定JavaScript可以访问的java类名
+     		scope用来指定这个Bean的生命周期，不谢默认为page -->
+         <create creator="spring" javascript="loginService">
+         <!-- 指定公开给JavaScript的java类 -->
+              <param name="beanName" value="loginService"></param>
+         </create>
+         
+         <!-- 配置java和JavaScript之间如何转换数据类型，converter="bean"属性指定转换的方式采用JavaBean命名规范，
+              match="com.model.TZhuhu"属性指定要转换的javabean名称，
+              <param>标签指定要转换的JavaBean属性。value指定要转换的属性 -->
+         <convert converter="bean" match="com.model.TZhuhu">
+              <param name="include" value="zhuhuId,zhuhuName"></param>
+         </convert>
+     </allow>
+</dwr>
